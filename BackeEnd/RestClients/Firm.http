@@ -1,0 +1,11 @@
+POST http://localhost:9000/Firm/addFirm 
+Content-Type: application/json
+
+{
+   "firmname": "SharthRestoBar",
+            "area":"GWD",
+            "category":"Non-veg,veg",
+            "region":"south,north",
+            "offer":"10% off",
+            "image":"ex.jpg"
+}
