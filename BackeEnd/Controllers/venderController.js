@@ -50,8 +50,10 @@ const VendorLogin = async (req, res) => {
             return res.status(401).json({ message: "Invalid email or password" });
         }
         let token = Jwt.sign({ id: vendor._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
+        // Set token in response header
         res.setHeader("token", token);
-        return res.status(200).json({ message: "Login successful", token });
+
+        return res.status(200).json({ message: "Login successful" });
     }
     catch (error) {
         return res.status(500).json({ message: `Internal server error: ${error.message}` });

@@ -17,14 +17,16 @@ const upload = multer({ storage: storage });
 
 const addFirm = async (req, res) => {
     try {
-        const { firmname, area, category, region, offer } = req.body;
-        const image = req.file ? req.file.filename : undefined;
+        const { firmname, area, category, region, offer, image } = req.body;
+        // const image = req.file ? req.file.filename : undefined;
 
         const vendor = await Vendor.findById(req.vendorId);
+        console.log("vendor;", vendor, firmname, area, category, region, offer);
+        console.log(";;", image);
+
         if (!vendor) {
             return res.status(404).json({ message: "Vendor not found" });
-        }
-
+        };
         const firm = new Firm({
             firmname,
             area,
@@ -32,17 +34,19 @@ const addFirm = async (req, res) => {
             region,
             offer,
             image,
-            vendor: vendor._id  
+            vendor: vendor._id
         });
 
         const saveFile = await firm.save();
+        console.log("saveFile");
+
         vendor.firm.push(saveFile);
         await vendor.save();
 
         res.status(200).json({ message: "Firm added successfully" });
 
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         res.status(500).json({ error: "Internal server error" });
     }
 };

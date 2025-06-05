@@ -1,11 +1,12 @@
 POST http://localhost:9000/Firm/addFirm 
 Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDE1NWU3NzdkZDVlYmE1MmE2NmIwNSIsImlhdCI6MTc0OTExNDE0NiwiZXhwIjoxNzQ5MTE3NzQ2fQ.8d4nKn4oiA9kJio5Gbcqw_Yd-TiRFEoc0icfI_yYeiM
 
 {
-   "firmname": "SharthRestoBar",
+   "firmname": "sree",
             "area":"GWD",
-            "category":"Non-veg,veg",
-            "region":"south,north",
+            "category":"non-veg,veg",
+            "region":"south-india,north-india",
             "offer":"10% off",
-            "image":"ex.jpg"
+            "image":"pss.jpg"
 }
