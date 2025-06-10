@@ -31,7 +31,7 @@ const firmSchema = new mongoose.Schema({
         type: String
     },
 
-    veder: {
+    vendor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Vendor',
         required: true

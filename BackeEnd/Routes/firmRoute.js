@@ -1,8 +1,9 @@
 import express from "express";
-let Router = express.Router();
-import { addFirm } from "../Controllers/firmController.js";
-import {verifyToken} from "../Middlewares/verifyToken.js";
+const Router = express.Router();
 
-Router.post("/addFirm", verifyToken, addFirm);
+import { upload, addFirm } from "../Controllers/firmController.js";
+import { verifyToken } from "../Middlewares/verifyToken.js";
+
+Router.post("/addFirm", verifyToken, upload.single("image"), addFirm);
 
 export { Router };
