@@ -2,8 +2,8 @@ POST http://localhost:9000/vender/Register
 Content-Type: application/json
 
 {
-  "username": "babu",
-  "email": "babu@gmail.com",
+  "username": "a",
+  "email": "a@gmail.com",
   "password": "1234567891"
 }
 
@@ -16,6 +16,6 @@ POST http://localhost:9000/vender/Login
 Content-Type: application/json
 
 {
-  "email": "babu@gmail.com",
+  "email": "a@gmail.com",
   "password":"1234567891"
 }
