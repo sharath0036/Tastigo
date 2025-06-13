@@ -1,6 +1,6 @@
 import React from 'react'
 
-const NavBar = () => {
+const NavBar = ({ loginHandler, registerHandler }) => {
   return (
     <header className="p-3 text-bg-dark">
       <div className="container">
@@ -10,8 +10,8 @@ const NavBar = () => {
             <h3>Tastigo</h3> </ul>
 
           <div className="text-end">
-            <button type="button" className="btn btn-outline-light me-2">Login</button> 
-            <button type="button" className="btn btn-warning">Register</button>
+            <button type="button" className="btn btn-outline-light me-2" onClick={loginHandler}>Login</button>
+            <button type="button" className="btn btn-warning" onClick={registerHandler}>Register</button>
           </div>
         </div>
       </div>
