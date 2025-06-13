@@ -12,4 +12,5 @@ Router.get("/ShowAll", VendorShowAll);
 Router.post("/Login", VendorLogin);
 Router.get("/AllVendors", getAllVendors);
 Router.get("/getVendorById/:id", getVendorById);
+
 export { Router };
