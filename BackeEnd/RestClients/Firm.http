@@ -1,13 +1,12 @@
 POST http://localhost:9000/Firm/addFirm 
 Content-Type: application/json
-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDFhNTI0ZTA4NTJkMzljZWY3MzcxOCIsImlhdCI6MTc0OTEzMjU5NiwiZXhwIjoxNzQ5MTM2MTk2fQ.96Yl_WvRvRAWPrQmxNuJ-3x3VIYfLyJTiAjOUCaqfjY
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDgyZjViZGRlMzkwY2EwYTFkNmFmNSIsImlhdCI6MTc0OTU2MTE4OCwiZXhwIjoxNzQ5NTY0Nzg4fQ.4CbTiTy0XcpxDxPB6x_SQAa4H8_yPnbJT4UguXuXaW4
 
 {
-  "firmname": "BabuRestoBar",
+  "firmname": "Restaurant",
   "area": "GWD",
-  "category": ["non-veg", "veg"],
+  "category": ["non-veg", "veg", "both"],
   "region": ["south-india", "north-india"],
-  "offer": "10% off",
   "image": "EX.jpg"
 }
 

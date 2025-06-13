@@ -35,9 +35,13 @@ const firmSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Vendor',
         required: true
-    }
+    },
+    products:[ {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    }]
 
 })
 
-const Firm = mongoose.model("Firm", firmSchema);
-export default Firm;
+const FirmModel = mongoose.model("Firm", firmSchema);
+export default FirmModel;

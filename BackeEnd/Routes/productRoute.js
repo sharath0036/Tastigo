@@ -1,10 +1,10 @@
 import express from "express";
 const Router = express.Router();
 
-import { upload, addFirm, deleteById } from "../Controllers/firmController.js";
-import { verifyToken } from "../Middlewares/verifyToken.js";
+import { upload, addProduct, getProductsById, deleteById } from "../Controllers/produtController.js";
 
-Router.post("/addFirm", verifyToken, upload.single("image"), addFirm);
+Router.post("/addProducts/:firmId", upload.single("image"), addProduct)
+Router.get("/getProducts/:firmId", getProductsById);
 
 Router.get("/uploads/:imageName", (req, res) => {
     const imageName = req.params.imageName;
@@ -12,6 +12,6 @@ Router.get("/uploads/:imageName", (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'uploads', imageName));
 });
 
-Router.delete("/deleteFirm/:firmId", deleteById)
+Router.delete("/deleteProduct/:productId", deleteById)
 
 export { Router };
