@@ -44,10 +44,22 @@ const addFirm = async (req, res) => {
         res.status(200).json({ message: "Firm added successfully" });
 
     } catch (error) {
-        console.error(error); // Un-commented for debugging
+        console.error(error);
         res.status(500).json({ error: "Internal server error" });
     }
 };
 
+const deleteById = async (req, res) => {
+    try {
+        const firmId = req.params.firmId;
+        const firm = await Firm.findByIdAndDelete(firmId);
+        if (!firm) {
+            return res.status(404).json({ message: "Firm not found" });
+        }
+        res.status(200).json({ message: "Firm deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ error: "Internal server error" });
+    }
+}
 
-export { upload, addFirm };
+export { upload, addFirm, deleteById };

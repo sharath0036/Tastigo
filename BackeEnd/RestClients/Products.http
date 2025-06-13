@@ -1,0 +1,15 @@
+###
+POST http://localhost:9000/Product/addProducts/68482fbd353632d963599d8d 
+Content-Type: application/json
+
+{
+    "productname": "idly",
+    "price":"50",
+    "category": ["veg"],
+    "image": "EX.jpg",
+    "bestseller":"true",
+    "description": "Tasty idly with chutney"
+}
+
+###
+GET http://localhost:9000/Product/getProducts/68482fbd353632d963599d8d
