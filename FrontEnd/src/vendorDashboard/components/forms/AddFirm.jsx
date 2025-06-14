@@ -1,73 +1,58 @@
 import React, { useState } from 'react';
 
 const AddFirm = () => {
-  const [firmName, setfirmName] = useState('');
-  const [area, setarea] = useState('');
-  const [category, setcategory] = useState([]);
-  const [region, setregion] = useState([]);
-  const [offer, setoffer] = useState('');
-  const [file, setfile] = useState(null);
+  const [formData, setFormData] = useState({
+    firmName: '',
+    area: '',
+    category: [],
+    region: [],
+    offer: '',
+    file: null,
+  });
 
-  const handleCategoryChange = (event) => {
-    const value = event.target.value;
-    if (category.includes(value)) {
-      setcategory(category.filter(item => item !== value));
-    } else {
-      setcategory([...category, value]);
-    }
+  const handleChange = (e) => {
+    const { id, value, type, files } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [id]: type === 'file' ? files[0] : value,
+    }));
   };
 
-  const handleRegionChange = (event) => {
-    const value = event.target.value;
-    if (region.includes(value)) {
-      setregion(region.filter(item => item !== value));
-    } else {
-      setregion([...region, value]);
-    }
+  const handleCheckboxChange = (e, field) => {
+    const value = e.target.value;
+    setFormData((prev) => ({
+      ...prev,
+      [field]: prev[field].includes(value)
+        ? prev[field].filter((item) => item !== value)
+        : [...prev[field], value],
+    }));
   };
 
-  const handleImageUpload = (event) => {
-    const value = event.target.files[0];
-    setfile(value);
-  };
-
-  const handlerAddFirmSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const loginToken = localStorage.getItem('loginToken');
-    const formData = new FormData();
+    const form = new FormData();
 
-    formData.append('firmName', firmName);
-    formData.append('area', area);
-    formData.append('offer', offer);
-    if (file) formData.append('image', file);
+    form.append('firmName', formData.firmName);
+    form.append('area', formData.area);
+    form.append('offer', formData.offer);
+    if (formData.file) form.append('image', formData.file);
 
-    category.forEach(value => {
-      formData.append('category', value);
-    });
-
-    region.forEach(value => {
-      formData.append('region', value);
-    });
+    formData.category.forEach((item) => form.append('category', item));
+    formData.region.forEach((item) => form.append('region', item));
+    console.log("form", form);
 
     try {
       const response = await fetch(`http://localhost:9000/Firm/addFirm`, {
         method: 'POST',
-        headers: {
-          'token': `${loginToken}`,
-        },
-        body: formData,
+        headers: { 'token': loginToken },
+        body: form,
       });
 
       const data = await response.json();
-
-      if (response.ok) {
-        console.log(data);
-        alert("Firm Created Successfully");
-      } else {
-        alert(data.message || "Something went wrong");
-      }
+      alert(response.ok ? "Firm Created Successfully" : data.message || "Something went wrong");
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error:", error);
       alert("Failed to add firm. Please try again.");
     }
   };
@@ -75,102 +60,39 @@ const AddFirm = () => {
   return (
     <div className="container">
       <div className="card mt-5" style={{ marginLeft: '250px', maxWidth: '600px' }}>
-        <div className="card-header text-center">
-          <h3>Add Firm</h3>
-        </div>
-
+        <div className="card-header text-center"><h3>Add Firm</h3></div>
         <div className="card-body">
-          <form onSubmit={handlerAddFirmSubmit}>
-            <div className="row">
-              <div className="col-md-6 mb-3">
-                <label htmlFor="firmName" className="form-label">Firm Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="firmName"
-                  value={firmName}
-                  onChange={(e) => setfirmName(e.target.value)}
-                  required
-                />
+          <form onSubmit={handleSubmit}>
+            {['firmName', 'area', 'offer'].map((field) => (
+              <div key={field} className="mb-3">
+                <label htmlFor={field} className="form-label">{field.replace(/\b\w/g, c => c.toUpperCase())}</label>
+                <input type="text" className="form-control" id={field} value={formData[field]} onChange={handleChange} required />
               </div>
+            ))}
 
-              <div className="col-md-6 mb-3">
-                <label htmlFor="area" className="form-label">Area</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="area"
-                  value={area}
-                  onChange={(e) => setarea(e.target.value)}
-                  required
-                />
-              </div>
+            <div className="mb-3">
+              <label className="form-label">Category</label>
+              {['veg', 'non-veg'].map((cat) => (
+                <div key={cat} className="form-check form-check-inline">
+                  <input className="form-check-input" type="checkbox" value={cat} checked={formData.category.includes(cat)} onChange={(e) => handleCheckboxChange(e, 'category')} />
+                  <label className="form-check-label">{cat.charAt(0).toUpperCase() + cat.slice(1)}</label>
+                </div>
+              ))}
             </div>
 
-            <div className="row">
-              <div className="col-md-6 mb-3">
-                <label className="form-label d-block">Category</label>
-                {['veg', 'non-veg'].map((cat) => (
-                  <div className="form-check form-check-inline" key={cat}>
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id={cat}
-                      value={cat}
-                      checked={category.includes(cat)}
-                      onChange={handleCategoryChange}
-                    />
-                    <label className="form-check-label" htmlFor={cat}>
-                      {cat.charAt(0).toUpperCase() + cat.slice(1)}
-                    </label>
-                  </div>
-                ))}
-              </div>
-
-              <div className="col-md-6 mb-3">
-                <label className="form-label d-block">Region</label>
-                {['south-indian', 'north-indian', 'chinese', 'bakery'].map((reg) => (
-                  <div className="form-check form-check-inline" key={reg}>
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id={reg}
-                      value={reg}
-                      checked={region.includes(reg)}
-                      onChange={handleRegionChange}
-                    />
-                    <label className="form-check-label" htmlFor={reg}>
-                      {reg.replace('-', ' ').replace(/\b\w/g, c => c.toUpperCase())}
-                    </label>
-                  </div>
-                ))}
-              </div>
+            <div className="mb-3">
+              <label className="form-label">Region</label>
+              {['south-india', 'north-india', 'chinese', 'bakery'].map((reg) => (
+                <div key={reg} className="form-check form-check-inline">
+                  <input className="form-check-input" type="checkbox" value={reg} checked={formData.region.includes(reg)} onChange={(e) => handleCheckboxChange(e, 'region')} />
+                  <label className="form-check-label">{reg.replace('-', ' ').replace(/\b\w/g, c => c.toUpperCase())}</label>
+                </div>
+              ))}
             </div>
 
-            <div className="row">
-              <div className="col-md-6 mb-3">
-                <label htmlFor="offer" className="form-label">Offer</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="offer"
-                  value={offer}
-                  onChange={(e) => setoffer(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="col-md-6 mb-3">
-                <label htmlFor="image" className="form-label">Upload Image</label>
-                <input
-                  type="file"
-                  className="form-control"
-                  id="image"
-                  onChange={handleImageUpload}
-                  accept="image/*"
-                  required
-                />
-              </div>
+            <div className="mb-3">
+              <label htmlFor="file" className="form-label">Upload Image</label>
+              <input type="file" className="form-control" id="file" onChange={handleChange} accept="image/*" required />
             </div>
 
             <button type="submit" className="btn btn-success w-100">Add Firm</button>
