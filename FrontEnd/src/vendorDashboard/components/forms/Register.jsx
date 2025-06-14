@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Register = () => {
+const Register = ({ loginHandler }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,6 +29,7 @@ const Register = () => {
                 setUsername('');
                 setEmail('');
                 setPassword('');
+                loginHandler(); // Call the login handler to switch to the login form
                 alert('Registration successful');
             } else {
                 setError(data.message || 'Registration failed');

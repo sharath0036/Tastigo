@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { Router as routes } from "./Routes/routes.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const app = express();
 dotenv.config();
@@ -16,7 +17,7 @@ app.use(cors({
 }));
 
 app.use(express.json()); // Make sure JSON parsing is enabled before routes
-
+app.use(cookieParser());
 // Root route
 app.get("/", (req, res) => {
     res.send("Hello");

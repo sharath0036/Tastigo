@@ -5,6 +5,7 @@ import Login from '../components/forms/Login';
 import Register from '../components/forms/Register';
 import AddFirm from '../components/forms/AddFirm';
 import AddProducts from '../components/forms/AddProducts';
+import WelCome from '../components/WelCome';
 
 const LandingPage = () => {
   const [activeForm, setActiveForm] = useState(null);
@@ -24,10 +25,11 @@ const LandingPage = () => {
             />
           </div>
           <div className="col-lg-9">
-            {activeForm === "login" && <Login />}
-            {activeForm === "register" && <Register />}
+            {activeForm === "login" && <Login showWelcomeHandler={() => setActiveForm("Welcome")} />}
+            {activeForm === "register" && <Register loginHandler={() => setActiveForm("login")} />}
             {activeForm === "addFirm" && <AddFirm />}
             {activeForm === "addProducts" && <AddProducts />}
+            {activeForm === "Welcome" && <WelCome />}
           </div>
         </div>
       </div>

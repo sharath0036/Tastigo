@@ -1,6 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Login = () => {
+const Login = ({ showWelcomeHandler }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const loginHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:9000/vender/Login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem('loginToken', data.token);
+        console.log(data);
+        setEmail('');
+        setPassword('');
+        showWelcomeHandler();
+        alert('Login successful');
+      } else {
+        alert(data.message || 'Login failed');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Login failed. Please try again.');
+    }
+  };
+
   return (
     <div className="container">
       <div
@@ -12,13 +48,15 @@ const Login = () => {
         </div>
 
         <div className="card-body">
-          <form className="row g-3">
+          <form className="row g-3" onSubmit={loginHandler}>
             <div className="col-12">
               <label htmlFor="email" className="form-label">Email</label>
               <input
                 type="email"
                 className="form-control"
                 id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 required
               />
@@ -28,6 +66,8 @@ const Login = () => {
               <label htmlFor="password" className="form-label">Password</label>
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="form-control"
                 id="password"
                 placeholder="Enter your password"
