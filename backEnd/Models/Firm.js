@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const firmSchema = new mongoose.Schema({
-    firmname: {
+    firmName: {
         type: String,
         required: true,
         unique: true
@@ -21,7 +21,7 @@ const firmSchema = new mongoose.Schema({
         {
             type: String,
             required: true,
-            enum: ['north-india', 'south-india']
+            enum: ['north-india', 'south-india', 'chinese', 'bakery']
         }
     ],
     offer: {
@@ -36,7 +36,7 @@ const firmSchema = new mongoose.Schema({
         ref: 'Vendor',
         required: true
     },
-    products:[ {
+    products: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'
     }]

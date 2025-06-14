@@ -41,24 +41,38 @@ const VendorShowAll = async (req, res) => {
 }
 
 const VendorLogin = async (req, res) => {
-
     const { email, password } = req.body;
 
     try {
         const vendor = await Vendor.findOne({ email });
+
         if (!vendor || !(await bcrypt.compare(password, vendor.password))) {
             return res.status(401).json({ message: "Invalid email or password" });
         }
-        let token = Jwt.sign({ id: vendor._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
-        // Set token in response header
-        res.setHeader("token", token);
 
-        return res.status(200).json({ message: "Login successful" });
-    }
-    catch (error) {
+        const token = Jwt.sign({ id: vendor._id }, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIRES_IN,
+        });
+
+        res.setHeader("token", token); 
+
+        res.cookie("token", token, {
+            maxAge: 900000,
+            httpOnly: true,
+            secure: true,
+            sameSite: "Strict",
+        });
+
+        return res.status(200).json({
+            message: "Login successful",
+            token: token,
+        });
+
+    } catch (error) {
         return res.status(500).json({ message: `Internal server error: ${error.message}` });
     }
-}
+};
+
 
 const getAllVendors = async (req, res) => {
     try {
@@ -81,4 +95,4 @@ const getVendorById = async (req, res) => {
         res.status(500).json({ message: `Error fetching vendor: ${error.message}` });
     }
 }
-export { VenderRegister, VendorShowAll, VendorLogin, getAllVendors , getVendorById };
+export { VenderRegister, VendorShowAll, VendorLogin, getAllVendors, getVendorById };

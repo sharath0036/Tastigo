@@ -16,8 +16,8 @@ POST http://localhost:9000/vender/Login
 Content-Type: application/json
 
 {
-  "email": "b@gmail.com",
-  "password":"1234567891"
+  "email": "sharath@gmail.com",
+  "password":"12341234"
 }
 
 ###
