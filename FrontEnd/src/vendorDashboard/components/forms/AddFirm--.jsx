@@ -129,7 +129,7 @@ const AddFirm = () => {
 
               <div className="col-md-6 mb-3">
                 <label className="form-label d-block">Region</label>
-                {['south-indian', 'north-indian', 'chinese', 'bakery'].map((reg) => (
+                {['south-india', 'north-india', 'chinese', 'bakery'].map((reg) => (
                   <div className="form-check form-check-inline" key={reg}>
                     <input
                       className="form-check-input"
