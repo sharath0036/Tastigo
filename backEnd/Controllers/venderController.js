@@ -54,7 +54,7 @@ const VendorLogin = async (req, res) => {
             expiresIn: process.env.JWT_EXPIRES_IN,
         });
 
-        res.setHeader("token", token); 
+        res.setHeader("token", token);
 
         res.cookie("token", token, {
             maxAge: 900000,
@@ -62,10 +62,11 @@ const VendorLogin = async (req, res) => {
             secure: true,
             sameSite: "Strict",
         });
-
+        const vendorId = vendor._id;
         return res.status(200).json({
             message: "Login successful",
             token: token,
+            vendorId
         });
 
     } catch (error) {
@@ -90,7 +91,8 @@ const getVendorById = async (req, res) => {
         if (!vendor) {
             return res.status(404).json({ message: "Vendor not found" });
         }
-        res.status(200).json(vendor);
+        const vendorFirmId = vendor.firm[0]._id;
+        res.status(200).json(venderId, vendorFirmId);
     } catch (error) {
         res.status(500).json({ message: `Error fetching vendor: ${error.message}` });
     }

@@ -17,7 +17,8 @@ const upload = multer({ storage: storage });
 
 const addProduct = async (req, res) => {
     try {
-        const { productname, price, category, description } = req.body;
+        const { productname, price, category, description, bestSeller } = req.body;
+
         const image = req.file ? req.file.filename : undefined;
 
         const firmId = req.params.firmId;
@@ -32,9 +33,11 @@ const addProduct = async (req, res) => {
             price,
             category,
             description,
+            bestSeller, 
             image,
             firm: firm._id
         });
+
 
         const savedProduct = await product.save();
         firm.products.push(savedProduct);

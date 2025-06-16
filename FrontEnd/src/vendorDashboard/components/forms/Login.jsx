@@ -31,6 +31,14 @@ const Login = ({ showWelcomeHandler }) => {
       } else {
         alert(data.message || 'Login failed');
       }
+
+      const venderId = data.vendorId;
+      const vendorResponse = await fetch(`http://localhost:9000/vender/getVendorById/${venderId}`);
+      const vendorData = await vendorResponse.json();
+      if (vendorResponse.ok) {
+        const vendorFirmId = vendorData.vendorFirmId;
+        localStorage.setItem("firmId", vendorFirmId)
+      }
     } catch (error) {
       console.error(error);
       alert('Login failed. Please try again.');
