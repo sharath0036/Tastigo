@@ -37,8 +37,12 @@ const Login = ({ showWelcomeHandler }) => {
       const vendorData = await vendorResponse.json();
       if (vendorResponse.ok) {
         const vendorFirmId = vendorData.vendorFirmId;
-        localStorage.setItem("firmId", vendorFirmId)
+        const vendorFrimName = vendorData.vendor.firm[0].firmName;
+        localStorage.setItem("firmId", vendorFirmId);
+        localStorage.setItem("firmName", vendorFrimName);
+        window.location.reload();
       }
+
     } catch (error) {
       console.error(error);
       alert('Login failed. Please try again.');

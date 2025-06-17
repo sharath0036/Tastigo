@@ -60,14 +60,6 @@ const AddFirm = () => {
         file: null,
       });
 
-      alert(
-        response.ok
-          ? "Firm Created Successfully"
-          : data.message === "You can only add 1 firm"
-            ? "You can only add 1 firm"
-            : data.message || "Something went wrong"
-      );
-
     } catch (error) {
       console.error("Error:", error);
       alert("Failed to add firm. Please try again.");

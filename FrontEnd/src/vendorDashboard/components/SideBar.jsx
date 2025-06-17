@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 
-const SideBar = ({ addFirmHandler, addProductsHandler }) => {
+const SideBar = ({ addFirmHandler, addProductsHandler, AllProductsHandler, showfirmTitle }) => {
     const [activeButton, setActiveButton] = useState("");
 
     const handleClick = (buttonType, handler) => {
@@ -13,14 +13,14 @@ const SideBar = ({ addFirmHandler, addProductsHandler }) => {
         <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{ width: '280px', height: '87vh' }}>
 
             <ul className="nav nav-pills flex-column mb-auto">
-                <li className="nav-item" onClick={() => handleClick("addfirm", addFirmHandler)}>
+                {showfirmTitle ? <li className="nav-item" onClick={() => handleClick("addfirm", addFirmHandler)}>
                     <a href="#" className={`nav-link ${activeButton === "addfirm" ? "link-body-emphasis active" : "link-body-emphasis"}`} aria-current="page">
                         <svg className="bi pe-none me-2" width="16" height="16" aria-hidden="true">
                             <use href="#home" />
                         </svg>
                         Add Firm
                     </a>
-                </li>
+                </li> : ""}
                 <li>
                     <a href="#" className={`nav-link ${activeButton === "addProducts" ? "link-body-emphasis active" : "link-body-emphasis"}`} onClick={() => handleClick("addProducts", addProductsHandler)} >
                         <svg className="bi pe-none me-2" width="16" height="16" aria-hidden="true">
@@ -30,7 +30,7 @@ const SideBar = ({ addFirmHandler, addProductsHandler }) => {
                     </a>
                 </li>
                 <li>
-                    <a href="#" className={`nav-link ${activeButton === "allProducts" ? "link-body-emphasis active" : "link-body-emphasis"}`}>
+                    <a href="#" className={`nav-link ${activeButton === "allProducts" ? "link-body-emphasis active" : "link-body-emphasis"}`} onClick={() => handleClick("allProducts", AllProductsHandler)}>
                         <svg className="bi pe-none me-2" width="16" height="16" aria-hidden="true">
                             <use href="#table" />
                         </svg>

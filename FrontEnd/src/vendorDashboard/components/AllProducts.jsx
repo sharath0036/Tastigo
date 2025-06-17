@@ -40,7 +40,7 @@ const AllProducts = () => {
     return (
         <div className="mt-4">
             <h4>All Products</h4>
-            {products.length === 0 ? (
+            {!products ? (
                 <p className="text-center text-muted">No Products Added</p>
             ) : (
                 <div className="row">
@@ -52,7 +52,7 @@ const AllProducts = () => {
                                         src={`http://localhost:9000/uploads/${item.image}`}
                                         className="card-img-top"
                                         alt={item.productname}
-                                        style={{ height: '200px', objectFit: 'cover' }}
+                                        style={{ height: '130px', width:'80px', objectFit: 'cover' }}
                                     />
                                 )}
                                 <div className="card-body">
