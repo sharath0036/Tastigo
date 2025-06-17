@@ -50,7 +50,24 @@ const AddFirm = () => {
       });
 
       const data = await response.json();
-      alert(response.ok ? "Firm Created Successfully" : data.message || "Something went wrong");
+      localStorage.setItem("firmId", data.firmId);
+      setFormData({
+        firmName: '',
+        area: '',
+        category: [],
+        region: [],
+        offer: '',
+        file: null,
+      });
+
+      alert(
+        response.ok
+          ? "Firm Created Successfully"
+          : data.message === "You can only add 1 firm"
+            ? "You can only add 1 firm"
+            : data.message || "Something went wrong"
+      );
+
     } catch (error) {
       console.error("Error:", error);
       alert("Failed to add firm. Please try again.");
